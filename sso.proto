@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package sso;
+
+option go_package = "github.com/puny-activity/sso-contract";
+
+service SSO {
+  rpc PublicKeys(PublicKeysRequest) returns (PublicKeysResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse);
+  rpc Refresh(RefreshRequest) returns (RefreshResponse);
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc Revoke(RevokeRequest) returns (RevokeResponse);
+  rpc RevokeAll(RevokeAllRequest) returns (RevokeAllResponse);
+}
+
+message PublicKeysRequest {}
+
+message PublicKeysResponse {
+  repeated string public_keys = 1;
+}
+
+message RegisterRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message RegisterResponse {}
+
+message AuthenticateRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message AuthenticateResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message RefreshRequest {
+  string refresh_token = 1;
+}
+
+message RefreshResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message ChangePasswordRequest {
+  string username = 1;
+  string old_password = 2;
+  string new_password = 3;
+}
+
+message ChangePasswordResponse {}
+
+message RevokeRequest {
+  string refresh_token = 1;
+}
+
+message RevokeResponse {}
+
+message RevokeAllRequest {
+  string refresh_token = 1;
+}
+
+message RevokeAllResponse {}
